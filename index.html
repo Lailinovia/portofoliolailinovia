@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Professional Portfolio</title>
+    <style>
+        /* Global Styles */
+        :root {
+            --dark-blue: #0a192f;
+            --light-blue: #172a45;
+            --bright-blue: #64ffda;
+            --white: #e6f1ff;
+            --gray: #8892b0;
+            --dark-gray: #1a1a1a;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Calibri', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark-blue);
+            color: var(--white);
+        }
+        
+        /* Navigation */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background-color: rgba(10, 25, 47, 0.9);
+            position: fixed;
+            width: 100%;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        .logo {
+            color: var(--bright-blue);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s;
+            padding: 0.5rem 1rem;
+            border-radius: 3px;
+        }
+        
+        .nav-links a:hover {
+            color: var(--bright-blue);
+            background-color: rgba(100, 255, 218, 0.1);
+        }
+        
+        .nav-links .active {
+            color: var(--bright-blue);
+        }
+        
+        /* Container for Pages */
+        .container {
+            padding-top: 80px;
+        }
+        
+        /* Page Styles */
+        .page {
+            display: none;
+            min-height: 100vh;
+            padding: 3rem 2rem;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .page-header {
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .page-header h1 {
+            color: var(--bright-blue);
+            font-size: 2.5rem;
+        }
+        
+        .page-header span {
+            color: var(--gray);
+            font-size: 1.5rem;
+            margin-left: 1rem;
+        }
+        
+        /* Home Page */
+        .home-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 0;
+        }
+        
+        .hero-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            border: 3px solid var(--bright-blue);
+            overflow: hidden;
+        }
+        
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .home-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--white);
+        }
+        
+        .home-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--bright-blue);
+        }
+        
+        .home-content p {
+            max-width: 600px;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--gray);
+            margin-bottom: 2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: var(--gray);
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--bright-blue);
+        }
+        
+        /* CV Page */
+        .cv-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .cv-form {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--light-blue);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+        
+        .cv-form h2 {
+            color: var(--bright-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: var(--dark-blue);
+            border: 1px solid var(--gray);
+            border-radius: 4px;
+            color: var(--white);
+            font-size: 0.9rem;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+        }
+        
+        .submit-btn {
+            background-color: var(--bright-blue);
+            color: var(--dark-blue);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background-color: rgba(100, 255, 218, 0.8);
+        }
+        
+        .cv-preview {
+            flex: 1;
+            min-width: 300px;
+            background-color: var(--light-blue);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+        
+        .cv-preview h2 {
+            color: var(--bright-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+        
+        .cv-preview-content {
+            background-color: var(--dark-blue);
+            padding: 1.5rem;
+            border-radius: 5px;
+            min-height: 400px;
+        }
+        
+        .cv-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .cv-section h3 {
+            color: var(--bright-blue);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            border-bottom: 1px solid var(--gray);
+            padding-bottom: 0.3rem;
+        }
+        
+        .cv-section p {
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        /* Portfolio Page */
+        .about-me {
+            background-color: var(--light-blue);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .about-me h2 {
+            color: var(--bright-blue);
+            margin-bottom: 1rem;
+        }
+        
+        .about-me p {
+            color: var(--gray);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .portfolio-section {
+            margin-bottom: 3rem;
+        }
+        
+        .portfolio-section h2 {
+            color: var(--bright-blue);
+            margin-bottom: 1.5rem;
+        }
+        
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .skill-card {
+            background-color: var(--light-blue);
+            padding: 1.5rem;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .skill-card h3 {
+            color: var(--bright-blue);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .skill-card p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .tool-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .tool-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            background-color: var(--light-blue);
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tool-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 0.8rem;
+        }
+        
+        .tool-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .tool-name {
+            color: var(--white);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .experience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .experience-card {
+            background-color: var(--light-blue);
+            padding: 1.5rem;
+            border-radius: 5px;
+        }
+        
+        .experience-card h3 {
+            color: var(--bright-blue);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+        
+        .experience-card p {
+            color: var(--gray);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .experience-card .experience-duration {
+            color: var(--white);
+            font-weight: bold;
+        }
+        
+        .certificate-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .certificate-card {
+            background-color: var(--light-blue);
+            padding: 1.5rem;
+            border-radius: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .certificate-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .certificate-image {
+            height: 150px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            border-radius: 5px;
+        }
+        
+        .certificate-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .certificate-content h3 {
+            color: var(--white);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+        
+        .certificate-content p {
+            color: var(--gray);
+            font-size: 0.8rem;
+        }
+        
+        .contact-info {
+            background-color: var(--light-blue);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+        
+        .contact-info h2 {
+            color: var(--bright-blue);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-item {
+            margin-bottom: 1rem;
+        }
+        
+        .contact-item h3 {
+            color: var(--white);
+            margin-bottom: 0.3rem;
+            font-size: 1.1rem;
+        }
+        
+        .contact-item p, .contact-item a {
+            color: var(--gray);
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        
+        .contact-item a:hover {
+            color: var(--bright-blue);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .nav-links li {
+                margin-left: 1rem;
+            }
+            
+            .nav-links a {
+                font-size: 0.9rem;
+                padding: 0.3rem 0.6rem;
+            }
+            
+            .page {
+                padding: 2rem 1rem;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .home-content {
+                padding: 2rem 0;
+            }
+            
+            .cv-container, .form-row {
+                flex-direction: column;
+            }
+            
+            .skills-grid, .tool-grid, .experience-grid, .certificate-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .page {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo">MyPortfolio</div>
+        <ul class="nav-links">
+            <li><a href="#" class="active" data-page="home">Home</a></li>
+            <li><a href="#" data-page="cv">CV</a></li>
+            <li><a href="#" data-page="portfolio">Portfolio</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Home Page -->
+        <section class="page active" id="home">
+            <div class="home-content">
+                <div class="hero-image">
+                    <img src="foto/fotoku.png"width="300" />
+                </div>
+                <h2>Laili Magfiroh Novia Putri M H</h2>
+                <h3>Web Developer & UI/IUX Designer</h3>
+                <p>I specialize in creating beautiful, functional, and user-centered digital experiences. With over 5 years of experience in web development, I'm passionate about building excellent software that improves the lives of those around me.</p>
+                <div class="social-links">
+                    <a href="http://www.linkedin.com/in/laili-magfiroh-novia-putri-m-h" target="_blank" title="LinkedIn">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="https://github.com/Lailinovia" target="_blank" title="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://t.me/leleleyyk" target="_blank" title="Telegram">
+                        <i class="fab fa-telegram"></i>
+                    </a>
+                    <a href="mailto:lailimaghfirohnovia@gmail.com" title="Email">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+            </div>
+        </section>
+
+        <!-- CV Page -->
+        <section class="page" id="cv">
+            <div class="page-header">
+                <h1>Curriculum Vitae</h1>
+                <span>Input Biodata and View CV</span>
+            </div>
+            
+            <div class="cv-container">
+                <div class="cv-form">
+                    <h2>Biodata Form</h2>
+                    <form id="cvForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profession">Profession</label>
+                            <input type="text" id="profession" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <textarea id="address" rows="3" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="summary">Professional Summary</label>
+                            <textarea id="summary" rows="4" required></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="education">Education</label>
+                            <textarea id="education" rows="4" required placeholder="Degree, Institution, Year"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="skills">Skills (comma separated)</label>
+                            <textarea id="skills" rows="3" required placeholder="HTML, CSS, JavaScript, etc."></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="experience">Work Experience</label>
+                            <textarea id="experience" rows="5" required placeholder="Position, Company, Duration, Responsibilities"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Update CV</button>
+                    </form>
+                </div>
+                
+                <div class="cv-preview">
+                    <h2>CV Preview</h2>
+                    <div class="cv-preview-content" id="cvPreview">
+                        <div class="cv-section">
+                            <h3 id="previewName">John Doe</h3>
+                            <p id="previewProfession">Web Developer</p>
+                            <p id="previewContact">Email: john.doe@example.com | Phone: (123) 456-7890</p>
+                            <p id="previewAddress">San Francisco, CA</p>
+                        </div>
+                        
+                        <div class="cv-section">
+                            <h3>Professional Summary</h3>
+                            <p id="previewSummary">Experienced web developer with expertise in front-end technologies and UX design. Passionate about creating responsive and user-friendly web applications.</p>
+                        </div>
+                        
+                        <div class="cv-section">
+                            <h3>Education</h3>
+                            <p id="previewEducation">Bachelor of Computer Science - University of Technology (2015-2019)</p>
+                        </div>
+                        
+                        <div class="cv-section">
+                            <h3>Skills</h3>
+                            <p id="previewSkills">HTML, CSS, JavaScript, React, Node.js, UX Design</p>
+                        </div>
+                        
+                        <div class="cv-section">
+                            <h3>Work Experience</h3>
+                            <p id="previewExperience">Senior Web Developer - Tech Solutions Inc. (2021-Present)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Page -->
+        <section class="page" id="portfolio">
+            <div class="page-header">
+                <h1>Welocome to my portofolio!</h1>
+            </div>
+            
+            <div class="about-me">
+                <h2>About Me</h2>
+                <p>I am a student of the Information Systems Study Program at Universitas Pembangunan Nasional “Veteran” East Java with a  strong academic background, achieving a GPA of 3.79 as one of my major achievements. During my studies, I have developed  skills and interests in UI/UX design, application testing, and programming languages such as Java, JavaScript, HTML, CSS, and  SQL. I have actively participated in individual and team projects involving web and mobile application development, project  management, UI/UX design, business solutions, and data analysis. With a strong passion for learning, I am eager to gain hands on experience through an impactful internship program and contribute effectively in a dynamic and innovative team  environment.</p>
+            </div>
+            
+            <div class="portfolio-section">
+                <h2>Skills</h2>
+                <div class="skills-grid">
+                    <div class="skill-card">
+                        <h3>Frontend Development</h3>
+                        <p>HTML5, CSS3, JavaScript, React, Vue.js, Responsive Design, Accessibility</p>
+                    </div>
+                    <div class="skill-card">
+                        <h3>UI/UX Design</h3>
+                        <p>User Research, Wireframing, Prototyping, Figma</p>
+                </div>
+            </div>
+            
+            <div class="portfolio-section">
+                <h2>Skill Tools</h2>
+                <div class="tool-grid">
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="foto/vscode.png" width="100" alt="Visual Studio Code logo">
+                        </div>
+                        <div class="tool-name">VsCode</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="foto/figma.png" width="100" alt="Figma logo">
+                        </div>
+                        <div class="tool-name">Figma</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="foto/Android studio.png" width="100" alt="Android studio logo">
+                        </div>
+                        <div class="tool-name">Android Studio</div>
+                    </div>
+                    <div class="tool-card">
+                        <div class="tool-icon">
+                            <img src="foto/canva.png" width="100" alt="Canva logo">
+                        </div>
+                        <div class="tool-name">Canva</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-section">
+                <h2>Experience & Organization</h2>
+                <div class="experience-grid">
+                    <div class="experience-card">
+                        <h3>Web Development Training </h3>
+                        <p class="experience-duration">2024</p>
+                        <p>Web Development Training Participants</p>
+                        <p>Learn how to implement HTML, CSS, and JS from 0.</p>
+                    </div>
+                    <div class="experience-card">
+                        <h3>Competition UI/UX Design</h3>
+                        <p class="experience-duration">2024</p>
+                        <p>UI/UX Designer</p>
+                        <p>Creating prototype designs, wireframes, user flows, and conducting testing using Maze.</p>
+                    </div>
+                    <div class="experience-card">
+                        <h3>Secretary of the HIMASIFO Advocacy Department</h3>
+                        <p class="experience-duration">Member since 2024 - early 2025</p>
+                        <p>As secretary, I perform several tasks such as taking minutes of meetings and work programmes, assisting with departmental correspondence, collecting and helping to donate funds when there is sad news, collecting data on outstanding students, and creating PowerPoint presentations for the monthly HIMASIFO meetings for 2024.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-section">
+                <h2>Certificates</h2>
+                <div class="certificate-grid">
+                    <div class="certificate-card">
+                        <div class="certificate-image">
+                            <img src="foto/Edspert.png" width="700x400" alt="Certificate of Completion from Web Development Bootcamp">
+                        </div>
+                        <div class="certificate-content">
+                            <h3>Training Web Development</h3>
+                            <p>Issued: 2024 | Valid indefinitely</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image">
+                            <img src="foto/ICFCOMPETITION.png" width="700x400" alt="Professional Certificate in UI/UX Design">
+                        </div>
+                        <div class="certificate-content">
+                            <h3>UX Design Professional</h3>
+                            <p>Issued: 2024 | Design App Aksi Peduli</p>
+                        </div>
+                    </div>
+                    <div class="certificate-card">
+                        <div class="certificate-image">
+                            <img src="foto/HIMASIFO.png" width="700x400" alt="Organization HIMASIFO">
+                        </div>
+                        <div class="certificate-content">
+                            <h3>Organization HIMASIFO</h3>
+                            <p>Issued: 2024-early 2025 | Secretary Advocacy HIMASIFO</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="portfolio-section">
+                <div class="contact-info">
+                    <h2>Contact Information</h2>
+                    <div class="contact-item">
+                        <h3>Email</h3>
+                        <p>lailimaghfirohnovia@gmail.com</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Phone</h3>
+                        <p>+6288991457673</p>
+                    </div>
+                    <div class="contact-item">
+                        <h3>LinkedIn</h3>
+                        <a href="#">http://www.linkedin.com/in/laili-magfiroh-novia-putri-m-h</a>
+                    </div>
+                    <div class="contact-item">
+                        <h3>GitHub</h3>
+                        <a href="#">https://github.com/Lailinovia</a>
+                    </div>
+                    <div class="contact-item">
+                        <h3>Location</h3>
+                        <p>Surabaya, Indonesia</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Navigation between pages
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all links
+                document.querySelectorAll('.nav-links a').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Hide all pages
+                document.querySelectorAll('.page').forEach(page => {
+                    page.classList.remove('active');
+                });
+                
+                // Show selected page
+                const pageId = this.getAttribute('data-page');
+                document.getElementById(pageId).classList.add('active');
+            });
+        });
+        
+        // Jalankan saat halaman dimuat
+document.addEventListener('DOMContentLoaded', function () {
+    // Data awal CV kamu
+    document.getElementById('previewName').textContent = 'Laili Magfiroh Novia Putri';
+    document.getElementById('previewProfession').textContent = 'Front-End Developer';
+    document.getElementById('previewContact').textContent = 'Email: lailimaghfirohnovia@gmail.com | Phone: 088991457673';
+    document.getElementById('previewAddress').textContent = 'Gresik, Jawa Timur, Indonesia';
+    document.getElementById('previewSummary').textContent = 'Mahasiswa Sistem Informasi dengan minat besar di bidang front-end development dan UI/UX design.';
+    document.getElementById('previewEducation').textContent = 'S1 Sistem Informasi - UPN "Veteran" Jawa Timur (2023–Sekarang)';
+    document.getElementById('previewSkills').textContent = 'HTML, CSS, JavaScript, SQL, Figma';
+    document.getElementById('previewExperience').textContent = 'Front-End Dev Proyek Mobile & Website FlowerNest';
+});
+
+// Event saat form disubmit
+const cvForm = document.getElementById('cvForm');
+cvForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    // Ambil data input form
+    const firstName = document.getElementById('firstName').value;
+    const lastName = document.getElementById('lastName').value;
+    const profession = document.getElementById('profession').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+    const summary = document.getElementById('summary').value;
+    const education = document.getElementById('education').value;
+    const skills = document.getElementById('skills').value;
+    const experience = document.getElementById('experience').value;
+
+    // Update preview
+    document.getElementById('previewName').textContent = `${firstName} ${lastName}`;
+    document.getElementById('previewProfession').textContent = profession;
+    document.getElementById('previewContact').textContent = `Email: ${email} | Phone: ${phone}`;
+    document.getElementById('previewAddress').textContent = address;
+    document.getElementById('previewSummary').textContent = summary;
+    document.getElementById('previewEducation').textContent = education;
+    document.getElementById('previewSkills').textContent = skills;
+    document.getElementById('previewExperience').textContent = experience;
+
+    alert('CV berhasil diperbarui!');
+        });
+    </script>
+</body>
+</html>
